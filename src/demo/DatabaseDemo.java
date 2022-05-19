@@ -7,15 +7,14 @@ import entity.Product;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class DatabaseDemo {
     public int insertTableTest(String name, Object row) {
         return Database.insertTable(name, row);
     }
 
-    public ArrayList selectTableTest(String name, String where) {
-        return Database.selectTable(name, where);
+    public ArrayList selectTableTest(String name) {
+        return Database.selectTable(name);
     }
 
     public int updateTableTest(String name, Object row) {
@@ -30,6 +29,9 @@ public class DatabaseDemo {
         Database.truncateTable(name);
     }
 
+    /** create 10 random objects each table
+     *
+     */
     public void initDatabase(){
         Random random = new Random();
         for(int id = 0; id < 10; id++){

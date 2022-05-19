@@ -12,13 +12,11 @@ public class Database {
     private static ArrayList<Accessory> accessoryTable;
     private static Database instants;
 
-    public static Database getInstance(){
-        if(instants == null){
-            return instants = new Database();
-        }
-        return instants;
-    }
-
+    /** Insert input data to table if right name
+     *
+     * @param name, row
+     * @return number of row
+     */
     public static int insertTable(String name, Object row){
         if(row.getClass().getName().equalsIgnoreCase("product")){
             productTable.add((Product) row);
@@ -37,7 +35,12 @@ public class Database {
         return 0;
     }
 
-    public static ArrayList selectTable(String name, String where){
+    /** Chọn bảng có tên trùng tên nhập vào
+     *
+     * @param name
+     * @return table
+     */
+    public static ArrayList selectTable(String name){
         if (name.equalsIgnoreCase("product"))
             return productTable;
         if (name.equalsIgnoreCase("category"))
@@ -47,6 +50,11 @@ public class Database {
         return null;
     }
 
+    /** Update table with input name
+     *
+     * @param name, row
+     * @return number of row
+     */
     public static int updateTable(String name, Object row){
         if (row == null){
             return 0;
@@ -85,6 +93,11 @@ public class Database {
         return 0;
     }
 
+    /** Delete table with input name
+     *
+     * @param name, row
+     * @return true
+     */
     public static boolean deleteTable(String name, Object row){
         if (row == null)
             return false;
@@ -122,6 +135,10 @@ public class Database {
         return false;
     }
 
+    /** Delete all database
+     *
+     * @param name
+     */
     public static void truncateTable(String name){
         boolean check = false;
         while (!check){
@@ -143,12 +160,20 @@ public class Database {
         }
     }
 
+    /** Print all table
+     *
+     */
     public static void printTable(){
         System.out.println(productTable);
         System.out.println(categoryTable);
         System.out.println(accessoryTable);
     }
 
+    /** Update table by id with input id
+     *
+     * @param id, row
+     * @return number of updated row
+     */
     public static int updateTableById(int id, Object row){
         if (row.getClass().getName().equalsIgnoreCase("product")){
             Product rowProduct = (Product) row;
@@ -182,4 +207,97 @@ public class Database {
 
         return 0;
     }
+
+    /**
+     * Find all tables with input name
+     * @param name
+     * @return corresponding table
+     */
+    public static ArrayList findAll(String name){
+        if (name.equalsIgnoreCase("Product")){
+            return productTable;
+        }
+        if (name.equalsIgnoreCase("Category")){
+            return categoryTable;
+        }
+        if (name.equalsIgnoreCase("Accessory")){
+            return accessoryTable;
+        }
+        return null;
+    }
+
+    /**
+     * Find object with input id
+     * @param id
+     * @return corresponding object
+     */
+    public static Object findById(int id){
+        for (Product product : productTable) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+
+        for (Category category : categoryTable) {
+            if (category.getId() == id) {
+                return category;
+            }
+        }
+
+        for (Accessory accessory : accessoryTable) {
+            if (accessory.getId() == id) {
+                return accessory;
+            }
+        }
+
+        return null;
+    }
+
+    public static Object findByName(String name){
+        for (Product product: productTable){
+            if (product.getName().equalsIgnoreCase(name))
+                return product;
+        }
+
+        for (Category category: categoryTable){
+            if (category.getName().equalsIgnoreCase(name))
+                return category;
+        }
+
+        for (Accessory accessory: accessoryTable){
+            if (accessory.getName().equalsIgnoreCase(name))
+                return accessory;
+        }
+
+        return null;
+    }
+
+    /**
+     * Search arraylist with object
+     * @param where
+     * @return corresponding arraylist
+     */
+    public static ArrayList search(Object where){
+        for(int i = 0; i < productTable.size(); i++){
+            if (productTable.get(i) == where){
+                return productTable;
+            }
+        }
+
+        for(int i = 0; i < categoryTable.size(); i++){
+            if (categoryTable.get(i) == where){
+                return categoryTable;
+            }
+        }
+
+        for(int i = 0; i < accessoryTable.size(); i++){
+            if (accessoryTable.get(i) == where){
+                return accessoryTable;
+            }
+        }
+
+        return null;
+    }
+
+
 }

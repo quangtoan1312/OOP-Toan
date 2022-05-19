@@ -1,4 +1,8 @@
 package dao;
 
-public class CategoryDAO {
+import entity.Category;
+import java.util.ArrayList;
+
+public class CategoryDAO extends BaseDAO{
+
 }

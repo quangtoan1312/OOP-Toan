@@ -4,12 +4,15 @@ import entity.Product;
 
 import java.util.Scanner;
 
-public class ProductDemo extends Product {
+public class ProductDemo extends Product{
 
     public ProductDemo(int id, String name, int categoryId) {
         super(id, name, categoryId);
     }
 
+    /** create test product with input
+     *
+     */
     public void createProductTest(){
         Scanner input = new Scanner(System.in);
         int id = input.nextInt();
