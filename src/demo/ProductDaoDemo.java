@@ -5,28 +5,29 @@ import entity.Product;
 
 import java.util.ArrayList;
 
-public class ProductDaoDemo extends ProductDAO {
+public class ProductDaoDemo {
+    static ProductDAO productDAO = new ProductDAO();
     public int insertTest(Product row) {
-        return super.insert(row);
+        return productDAO.insert(row);
     }
 
     public int updateTest(Product row) {
-        return super.update(row);
+        return productDAO.update(row);
     }
 
     public boolean deleteTest(Product row) {
-        return super.delete(row);
+        return productDAO.delete(row);
     }
 
-    public ArrayList findAllTest() {
-        return super.findAll();
+    public static ArrayList findAllTest() {
+        return productDAO.findAll("Product");
     }
 
-    public Object findByIdTest(int id){
-        return findById(id);
+    public Product findByIdTest(int id){
+        return (Product) productDAO.findById(id);
     }
 
     public Object findByNameTest(String name){
-        return findByName(name);
+        return productDAO.findByName(name);
     }
 }

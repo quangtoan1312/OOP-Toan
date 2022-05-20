@@ -1,5 +1,6 @@
 package dao;
 
+import com.sun.rowset.internal.BaseRow;
 import entity.Accessory;
 import entity.Category;
 import entity.Product;
@@ -7,36 +8,68 @@ import entity.Product;
 import java.util.ArrayList;
 
 public class Database {
-    private static ArrayList<Product> productTable;
-    private static ArrayList<Category> categoryTable;
-    private static ArrayList<Accessory> accessoryTable;
+    private static ArrayList<Product> productTable = new ArrayList<>();
+    private static ArrayList<Category> categoryTable = new ArrayList<>();
+    private static ArrayList<Accessory> accessoryTable = new ArrayList<>();
     private static Database instants;
+    public Database(){}
 
-    /** Insert input data to table if right name
-     *
+    public static Database getInstants(){ //1 object duy nhat
+        if (instants == null){
+            instants = new Database();
+        }
+        return instants;
+    }
+
+    public static void setProductTable(ArrayList<Product> productTable) {
+        Database.productTable = productTable;
+    }
+
+    public static void setCategoryTable(ArrayList<Category> categoryTable) {
+        Database.categoryTable = categoryTable;
+    }
+
+    public static void setAccessoryTable(ArrayList<Accessory> accessoryTable) {
+        Database.accessoryTable = accessoryTable;
+    }
+
+    public static ArrayList<Product> getProductTable() {
+        return productTable;
+    }
+
+    public static ArrayList<Category> getCategoryTable() {
+        return categoryTable;
+    }
+
+    public static ArrayList<Accessory> getAccessoryTable() {
+        return accessoryTable;
+    }
+
+    /**
+     * Insert input data to table if right name
      * @param name, row
      * @return number of row
      */
     public static int insertTable(String name, Object row){
-        if(row.getClass().getName().equalsIgnoreCase("product")){
+        if(row.getClass().getName().equalsIgnoreCase(Product.class.getName())){
             productTable.add((Product) row);
             return 1;
         }
 
-        if(row.getClass().getName().equalsIgnoreCase("category")){
+        if(row.getClass().getName().equalsIgnoreCase(Category.class.getName())){
             categoryTable.add((Category) row);
             return 1;
         }
 
-        if(row.getClass().getName().equalsIgnoreCase("accessory")){
+        if(row.getClass().getName().equalsIgnoreCase(Accessory.class.getName())){
             accessoryTable.add((Accessory) row);
             return 1;
         }
         return 0;
     }
 
-    /** Chọn bảng có tên trùng tên nhập vào
-     *
+    /**
+     * Select table
      * @param name
      * @return table
      */
@@ -50,8 +83,8 @@ public class Database {
         return null;
     }
 
-    /** Update table with input name
-     *
+    /**
+     * Update table with input name
      * @param name, row
      * @return number of row
      */
@@ -60,17 +93,17 @@ public class Database {
             return 0;
         }
 
-        if (name.equalsIgnoreCase("product")){
+        if (name.equalsIgnoreCase("Product")){
             Product rowProduct = (Product) row;
             for (int i = 0; i < productTable.size(); i++){
-                if (productTable.get(i).getId() == rowProduct.getId()){
+                if (rowProduct.getId() == productTable.get(i).getId()){
                     productTable.set(i, rowProduct);
                 }
             }
             return 1;
         }
 
-        if (name.equalsIgnoreCase("category")){
+        if (name.equalsIgnoreCase("Category")){
             Category rowCategory = (Category) row;
             for (int i = 0; i < categoryTable.size(); i++){
                 if (categoryTable.get(i).getId() == rowCategory.getId()){
@@ -80,7 +113,7 @@ public class Database {
             return 1;
         }
 
-        if (name.equalsIgnoreCase("accessory")){
+        if (name.equalsIgnoreCase("Accessory")){
             Accessory rowAccessory = (Accessory) row;
             for (int i = 0; i < accessoryTable.size(); i++){
                 if (accessoryTable.get(i).getId() == rowAccessory.getId()){
@@ -105,8 +138,8 @@ public class Database {
         if (name.equalsIgnoreCase("product")){
             Product rowProduct = (Product) row;
             for (int i = 0; i < productTable.size(); i++){
-                if (productTable.get(i).getId() == rowProduct.getId()){
-                    productTable.remove(i);
+                if (Database.getProductTable().get(i).getId() == rowProduct.getId()){
+                    Database.getProductTable().remove(i);
                 }
             }
             return true;
@@ -115,8 +148,8 @@ public class Database {
         if (name.equalsIgnoreCase("category")){
             Category rowCategory = (Category) row;
             for (int i = 0; i < categoryTable.size(); i++){
-                if (categoryTable.get(i).getId() == rowCategory.getId()){
-                    categoryTable.remove(i);
+                if (Database.getCategoryTable().get(i).getId() == rowCategory.getId()){
+                    Database.getCategoryTable().remove(i);
                 }
             }
             return true;
@@ -125,8 +158,8 @@ public class Database {
         if (name.equalsIgnoreCase("accessory")){
             Accessory rowAccessory = (Accessory) row;
             for (int i = 0; i < accessoryTable.size(); i++){
-                if (accessoryTable.get(i).getId() == rowAccessory.getId()){
-                    accessoryTable.remove(i);
+                if (Database.getAccessoryTable().get(i).getId() == rowAccessory.getId()){
+                    Database.getAccessoryTable().remove(i);
                 }
             }
             return true;
@@ -143,18 +176,18 @@ public class Database {
         boolean check = false;
         while (!check){
             if (name.equalsIgnoreCase("product")) {
-                productTable.removeAll(productTable);
+                Database.getProductTable().removeAll(Database.productTable);
                 check = true;
             }
 
 
             if(name.equalsIgnoreCase("category")) {
-                categoryTable.removeAll(categoryTable);
+                Database.getCategoryTable().removeAll(categoryTable);
                 check = true;
             }
 
             if(name.equalsIgnoreCase("accessory")) {
-                accessoryTable.removeAll(accessoryTable);
+                Database.getAccessoryTable().removeAll(accessoryTable);
                 check = true;
             }
         }
@@ -164,9 +197,18 @@ public class Database {
      *
      */
     public static void printTable(){
-        System.out.println(productTable);
-        System.out.println(categoryTable);
-        System.out.println(accessoryTable);
+        ArrayList<Product> newProduct = productTable;
+        for (Product product: newProduct){
+            System.out.println(product.toString());
+        }
+        ArrayList<Category> newCategory = categoryTable;
+        for (Category category: newCategory){
+            System.out.println(category.toString());
+        }
+        ArrayList<Accessory> newAccessory = accessoryTable;
+        for (Accessory accessory: newAccessory){
+            System.out.println(accessory.toString());
+        }
     }
 
     /** Update table by id with input id
@@ -298,6 +340,4 @@ public class Database {
 
         return null;
     }
-
-
 }

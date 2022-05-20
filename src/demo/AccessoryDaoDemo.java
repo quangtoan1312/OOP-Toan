@@ -1,32 +1,34 @@
 package demo;
 
 import dao.AccessoryDAO;
+import dao.IDao;
 import entity.Accessory;
 
 import java.util.ArrayList;
 
-public class AccessoryDaoDemo extends AccessoryDAO {
+public class AccessoryDaoDemo {
+    AccessoryDAO accessoryDAO = new AccessoryDAO();
     public int insertTest(Accessory row) {
-        return insert(row);
+        return accessoryDAO.insert(row);
     }
 
     public int updateTest(Accessory row) {
-        return update(row);
+        return accessoryDAO.update(row);
     }
 
     public boolean deleteTest(Accessory row) {
-        return delete(row);
+        return accessoryDAO.delete(row);
     }
 
     public ArrayList findAllTest(String name) {
-        return findAll(name);
+        return accessoryDAO.findAll(name);
     }
 
     public Object findByIdTest(int id){
-        return findById(id);
+        return accessoryDAO.findById(id);
     }
 
     public ArrayList searchTest(Object where){
-        return search(where);
+        return accessoryDAO.search(where);
     }
 }

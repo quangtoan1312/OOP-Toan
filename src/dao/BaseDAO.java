@@ -1,27 +1,28 @@
 package dao;
 
-import entity.Accessory;
-
 import java.util.ArrayList;
 
-abstract class BaseDAO {
+abstract class BaseDAO implements IDao{
     /**
      * Insert new object to database
      * @param row
      * @return number of row
      */
-    protected int insert(Object row){
+    public int insert(Object row){
 
         if (row.getClass().getName().equalsIgnoreCase("Product")){
             Database.insertTable("Product",row);
+            return 1;
         }
 
         if (row.getClass().getName().equalsIgnoreCase("Category")){
             Database.insertTable("Category",row);
+            return 1;
         }
 
         if (row.getClass().getName().equalsIgnoreCase("Accessory")){
             Database.insertTable("Accessory",row);
+            return 1;
         }
 
         return 0;
@@ -32,7 +33,7 @@ abstract class BaseDAO {
      * @param row
      * @return number of row
      */
-    protected static int update(Object row){
+    public int update(Object row){
         if (row.getClass().getName().equalsIgnoreCase("Product")){
             Database.updateTable("Product", row);
             return 1;
@@ -55,7 +56,7 @@ abstract class BaseDAO {
      * @param row
      * @return true
      */
-    public static boolean delete(Object row){
+    public boolean delete(Object row){
         if (row.getClass().getName().equalsIgnoreCase("Product")){
             Database.deleteTable("Product", row);
             return true;
@@ -79,7 +80,7 @@ abstract class BaseDAO {
      * @param name
      * @return object list
      */
-    protected static ArrayList findAll(String name){
+    public ArrayList<String> findAll(String name){
         if (name.equalsIgnoreCase("Product")){
             return Database.findAll(name);
         }
@@ -95,8 +96,8 @@ abstract class BaseDAO {
         return null;
     }
 
-    /** find category with input id
-     *
+    /**
+     * Find category with input id
      * @param id
      * @return category
      */
